@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 //import java.util.Arrays;
@@ -26,7 +27,7 @@ public class App2 {
         final String SUCCESS_MSG = String.format("\t%s%s%s\n", COLOR_GREEN_BOLD, "%s", RESET);
 
         String screen = DASHBOARD;
-        String[] [] holders = new String [] [] {};
+        ArrayList<String> holders = new ArrayList();
         //String[] accountNumber = {};
 
         mainLoop:
@@ -65,7 +66,7 @@ public class App2 {
 
                 case CREATE_ACCOUNT:
                     // Automatically ID Printing
-                    System.out.printf("ID: SDB-%05d \n", (holders.length + 1));
+                    System.out.printf("ID: SDB-%05d \n", (holders[index][0]+ 1));
 
                     boolean valid = true;
                     String name;
@@ -77,6 +78,7 @@ public class App2 {
                         valid = true;
                         System.out.print("Name: ");
                         name = scanner.nextLine().strip().toUpperCase();
+
                         if (name.isEmpty()) {
                             valid = false;
                             System.out.printf(ERROR_MSG, "Can't be Empty");
@@ -90,6 +92,7 @@ public class App2 {
                                 continue nameValidation;
                             }   
                         }
+                        
                     }while(true);
 
                     // Check Deposi Amount
@@ -100,18 +103,20 @@ public class App2 {
                         deposit = scanner.nextDouble();
                         scanner.nextLine();
 
-                        
                         if (deposit < 5000) {
                             valid = false;
                             System.out.printf(ERROR_MSG, "Insufficient Balance");
                             continue amountValidation; 
                         } else {
-                            deposit > 5000;
+                            valid = true;
                             break;
                         }
-
-
                     }while(true);
+                    // Add account holder information to the holders list
+                    //holders.add(new String[]{name, String.valueOf(deposit)});
+                    // Move back to the main dashboard
+                    screen = DASHBOARD;
+                    break;
             }
         }while(true);
     }
